@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+<app-entity-context-menu #cm [items]="contextMenuItems"></app-entity-context-menu>
+
+<div class="row align-middle">
+  <div class="col align-self-start">
+
+    <span class="p-input-icon-left mt-1 ml-1" style="width: 100%;">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" class="w-100" (input)="dt.filterGlobal($event.target.value, 'contains')"
+        placeholder="Search For a Product Using Name / Barcode" />
+    </span>
+  </div>
+  <div class="col align-self-end">
+
+    <app-entity-buttons [entityName]="'Drug'" (clicked)="entityActions($event)"></app-entity-buttons>
+  </div>
+</div>
+
+<div class="card">
+  <p-table #dt [value]="entities" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm" dataKey="barcode"
+    [paginator]="true" [rows]="11" [showCurrentPageReport]="true" [loading]="isLoading"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[11,25,50]"
+    [globalFilterFields]="['name','barcode']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="barcode">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Barode
+            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            <p-sortIcon field="barcode"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cost_price">Cost Price <p-sortIcon field="cost_price"></p-sortIcon>
+        </th>
+        <th pSortableColumn="selling_price">Selling Price <p-sortIcon field="selling_price"></p-sortIcon>
+        </th>
+        <!-- <th>Quantity</th> -->
+        <!-- <th>Company</th> -->
+        <!-- <th>Expiry Date</th> -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-drug>
+      <tr [pContextMenuRow]="drug" pTooltip="Right Click Me To Edit" tooltipPosition="bottom">
+        <td>{{drug.barcode}}</td>
+        <td>{{drug.name}}</td>
+        <td>{{drug.cost_price | currency: 'ILS' }}</td>
+        <td>{{drug.selling_price | currency: 'ILS' }}</td>
+        <!-- <td>{{drug.quantity}}</td> -->
+        <!-- <td>{{drug.company}}</td> -->
+        <!-- <td>{{drug.expiry}}</td> -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+  </p-table>
+</div>

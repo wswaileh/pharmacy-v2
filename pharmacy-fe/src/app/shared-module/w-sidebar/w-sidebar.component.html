@@ -1,0 +1,45 @@
+<!-- <p>w-sidebar works!</p>
+<ng-content></ng-content> -->
+
+<div class="d-flex {{isOpen ? '' : 'toggled'}}" id="wrapper">
+  <!-- Sidebar -->
+  <div class="border-right" id="sidebar-wrapper">
+    <div *ngFor="let item of items">
+      <div class="sidebar-heading text-uppercase">{{item.itemName}}</div>
+      <div class="list-group list-group-flush" *ngFor="let subItem of item.items">
+        <a *ngIf="!subItem.isDisabled" routerLink="{{subItem.routerLink}}" [routerLinkActive]="['is-active']"
+          class="list-group-item list-group-item-action">
+          <div class="row">
+            <div class="col-2">
+              <i class="{{subItem.icon}} mr-1"></i>
+            </div>
+            <div class="col-9">
+              {{ subItem.itemName }}
+            </div>
+          </div>
+        </a>
+        <a *ngIf="subItem.isDisabled" class="list-group-item-disabled list-group-item-action" pTooltip="Coming soon"
+          tooltipPosition="bottom">
+          <div class="row">
+            <div class="col-2">
+              <i class="{{subItem.icon}} mr-1"></i>
+            </div>
+            <div class="col-9">
+              {{ subItem.itemName }}
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+  <!-- END OF Sidebar -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <ng-content></ng-content>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->

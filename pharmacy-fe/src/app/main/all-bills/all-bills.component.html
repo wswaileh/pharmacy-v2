@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+<p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+
+<app-entity-buttons [entityName]="'Bill'" (clicked)="entityActions($event)"></app-entity-buttons>
+
+<div class="card">
+  <p-table [value]="entities" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm" [loading]="isLoading"
+    [paginator]="true" [rows]="11" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[11,25,50]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Pharmacist</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Total</th>
+        <th>Items</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bill>
+      <tr [pContextMenuRow]="bill">
+        <td>{{bill.pharmacist}}</td>
+        <td>{{bill.date | date: 'mediumDate'}}</td>
+        <td>{{bill.date | date:'shortTime'}}</td>
+        <td>{{bill.total | currency: 'ILS' }}</td>
+        <td><a>See Items</a></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

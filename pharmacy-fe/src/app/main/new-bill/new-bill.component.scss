@@ -1,0 +1,28 @@
+.w-col {
+  min-height: calc(100vh - 3rem);
+}
+
+::ng-deep .p-autocomplete {
+  width: 100%;
+}
+
+::ng-deep .p-inputtext {
+  width: 100%;
+}
+
+.delete-cell {
+  width: 10%;
+}
+
+::ng-deep .p-inputnumber-input {
+  background-color: #325470 !important;
+  color: white !important;
+  filter: brightness(85%) !important;
+}
+
+::ng-deep
+  .p-datatable.p-datatable-striped
+  .p-datatable-tbody
+  > tr:nth-child(even) {
+  filter: brightness(0.8);
+}
