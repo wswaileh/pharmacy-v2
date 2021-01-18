@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BaseEntityService } from '../_services/facade-services/base-entity.service';
+import { ButtonsGroupActions } from '../_utils/constants';
 
 @Component({
   selector: 'app-base-component',
@@ -17,8 +18,8 @@ export class BaseComponent<Entity> implements OnInit {
   entityService: BaseEntityService<Entity>;
 
   contextMenuItems: MenuItem[] = [
-    { label: 'Edit', icon: 'fas fa-edit', command: () => this.entityActions('Edit') },
-    { label: 'Remove', icon: 'fas fa-trash-alt', command: () => this.entityActions('Remove') }
+    { label: 'Edit', icon: 'fas fa-edit', command: () => this.entityActions(ButtonsGroupActions.Edit) },
+    { label: 'Remove', icon: 'fas fa-trash-alt', command: () => this.entityActions(ButtonsGroupActions.Remove) }
   ];
 
   constructor(entityService: BaseEntityService<Entity>) {
@@ -32,6 +33,7 @@ export class BaseComponent<Entity> implements OnInit {
   }
 
   entityActions(actionType) {
+
     console.log(actionType);
   }
 

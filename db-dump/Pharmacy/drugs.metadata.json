@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"Pharmacy.drugs"},{"v":{"$numberInt":"2"},"key":{"barcode":{"$numberInt":"1"}},"name":"barcode_1","ns":"Pharmacy.drugs","background":true}],"uuid":"4b37695ad7354531b2012be5feaa019d"}
