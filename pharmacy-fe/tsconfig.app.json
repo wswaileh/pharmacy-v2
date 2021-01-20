@@ -3,6 +3,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "types": []
   },
   "files": [
@@ -11,6 +13,5 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ],
-
+  ]
 }

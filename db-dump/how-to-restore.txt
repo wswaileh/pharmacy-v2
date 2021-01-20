@@ -1,0 +1,1 @@
+mongorestore -d [your_db_name] [your_dump_dir]
