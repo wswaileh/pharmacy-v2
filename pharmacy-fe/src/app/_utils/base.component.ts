@@ -229,7 +229,6 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
   }
 
   handleError(error) {
-    console.log(error);
     this.errors = [];
     if (error) {
       this.emitFailureToast('Error', error.message);
