@@ -5,6 +5,7 @@ import { DrugsComponent } from './drugs/drugs.component';
 import { MainComponent } from './main/main.component';
 import { ModifyUsersComponent } from './modify-users/modify-users.component';
 import { NewBillComponent } from './new-bill/new-bill.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 const routes: any = [
   {
     path: '',
@@ -13,6 +14,10 @@ const routes: any = [
     children: [
       {
         path: 'drugs',
+        component: DrugsComponent
+      },
+      {
+        path: 'drugs/:barcode',
         component: DrugsComponent
       },
       {
@@ -26,6 +31,10 @@ const routes: any = [
       {
         path: 'users',
         component: ModifyUsersComponent
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent
       },
       { path: '**', redirectTo: 'new-bill' }
     ]

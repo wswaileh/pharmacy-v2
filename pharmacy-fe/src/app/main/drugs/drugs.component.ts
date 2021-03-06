@@ -1,31 +1,95 @@
 import { Component, OnInit } from '@angular/core';
-import { DrugEntityService } from 'src/app/_services/facade-services/drug/drug.service';
-import { BaseComponent } from 'src/app/_utils/base.component';
-import { Drug } from '../../_models/Drug.model';
+import { DrugEntityService } from '../../_services/facade-services/drug/drug.service';
+import { BaseComponent } from '../../_utils/base.component';
+import { Drug } from '../../_models/drug.model';
+import { ButtonsGroupActions } from '../../_utils/constants';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DrugDataService } from '../../_services/data-services/drug/drug.data.service';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
+import { NotificationEntityService } from '../../_services/facade-services/notification/notification.service';
+
 @Component({
   selector: 'app-drugs',
   templateUrl: './drugs.component.html',
   styleUrls: ['./drugs.component.scss'],
 })
 export class DrugsComponent extends BaseComponent<Drug> implements OnInit {
+  drugService: DrugEntityService;
+  billService: BillEntityService;
 
-  constructor(drugService: DrugEntityService) {
-    super(drugService);
-  }
+  uniqueBarcodes: number[];
 
-  deleteDrug(selectedDrug) {
-    this.entityService.delete(selectedDrug).subscribe((data) => {
-      console.log(data);
-    });
+  constructor(
+    drugService: DrugEntityService,
+    confirmationService: ConfirmationService,
+    messageService: MessageService,
+    drugDataService: DrugDataService,
+    route: ActivatedRoute,
+    titleService: Title,
+    billService: BillEntityService,
+    noticationService: NotificationEntityService
+  ) {
+    super(drugService, 'Drug', Drug, confirmationService, messageService, drugDataService, route, titleService, noticationService);
+    this.drugService = drugService;
+    this.billService = billService;
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.contextMenuItems =
-      [
-        { label: 'Duplicate', icon: 'far fa-copy', command: () => this.entityActions('Duplicate') },
-        ...this.contextMenuItems,
-      ];
+    this.contextMenuItems = [
+      {
+        label: 'Edit',
+        icon: 'fas fa-edit',
+        command: () => this.entityActions(ButtonsGroupActions.Edit),
+      },
+      {
+        label: 'Duplicate',
+        icon: 'far fa-copy',
+        command: () => this.entityActions(ButtonsGroupActions.Duplicate),
+      },
+      {
+        label: 'Remove',
+        icon: 'fas fa-trash-alt',
+        command: () => this.entityActions(ButtonsGroupActions.Remove),
+      },
+    ];
   }
 
+  afterEntityDataFetch() {
+    if (this.entities && this.entities.length > 0) {
+      this.uniqueBarcodes = this.entities.map(e => e.barcode);
+
+      this.route.paramMap.subscribe((params) => {
+        this.scrollIntoSection(params.get('barcode'));
+        this.selectedEntity = this.entities.find(
+          (entity) => entity.barcode === +params.get('barcode')
+        );
+      });
+    }
+  }
+
+  afterEntityUpdate() {
+    this.billService.getAll();
+  }
+
+  getEntityDetailsMessage(entity) {
+    return entity.name + ' ' + this.entityAction + ' Successfully';
+  }
+
+  getEntityDeletionMessage() {
+    return (
+      'Are you sure that you want to delete \'' + this.selectedEntity.name + '\'?'
+    );
+  }
+
+  private scrollIntoSection(tag) {
+    setTimeout(() => {
+      const elmnt = document.getElementById(tag);
+      if (elmnt) {
+        elmnt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 20);
+  }
 }

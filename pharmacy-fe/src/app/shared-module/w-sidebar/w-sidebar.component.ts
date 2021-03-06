@@ -5,6 +5,8 @@ export interface SideBarItem {
   routerLink: string;
   icon: string;
   isDisabled?: boolean;
+  isWithNotificationCount?: boolean;
+  notificationsCount?: number;
 }
 
 export interface SideBarItemsGroup {
@@ -26,8 +28,6 @@ export class WSidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // this.faCoffee = { prefix: 'fas', iconName: 'coffee', icon: [] };
-    // console.log(this.faCoffee);
   }
 
 }

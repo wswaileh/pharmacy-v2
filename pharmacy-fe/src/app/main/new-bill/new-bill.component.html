@@ -1,8 +1,10 @@
+<p-toast [baseZIndex]="1000"></p-toast>
+
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
 <div class="row ml-0">
   <!-- Left col -->
-  <div class="w-col col-9">
+  <div class="w-col col-10">
 
     <div class="p-d-flex mt-2 mb-3">
       <span class="p-input-icon-left p-ml-auto w-100">
@@ -28,7 +30,7 @@
       </span>
     </div>
 
-    <p-table [value]="billItems" dataKey="id" styleClass="p-datatable-sm p-datatable-striped" [autoLayout]="true">
+    <p-table [value]="this.entityEditorFormModel.items" dataKey="id" styleClass="p-datatable-sm p-datatable-striped" [autoLayout]="true">
       <ng-template pTemplate="header">
         <tr>
           <th>Barode</th>
@@ -44,10 +46,10 @@
       <ng-template pTemplate="body" let-product>
         <tr>
           <td>
-            {{product.barcode}}
+            {{product.drug.barcode}}
           </td>
           <td>
-            {{product.name}}
+            {{product.drug.name}}
           </td>
           <td pEditableColumn>
             <p-cellEditor>
@@ -85,21 +87,21 @@
   <!-- End Of Left col -->
 
   <!-- Right col -->
-  <div class="w-col col-3" style="background-color: #325470;">
+  <div class="w-col col-2" style="background-color: #325470;">
     <h3 class="text-white mt-3">Total</h3>
     <hr style="background-color: #172834; width: 80%; margin-left: -0.5rem;" />
     <h3 class="text-white mt-3">{{ getTotal() | currency: 'ILS'}}</h3>
     <br />
     <h5 class="text-white mt-3">Discount By Percentage</h5>
     <hr style="background-color: #172834; width: 80%; margin-left: -0.5rem;" />
-    <p-inputNumber [(ngModel)]="discountPercentage" prefix="%"></p-inputNumber>
+    <p-inputNumber [(ngModel)]="this.entityEditorFormModel.discountPercentage" prefix="%"></p-inputNumber>
     <br /><br />
     <h5 class="text-white mt-3">Discount Amount (ILS)</h5>
     <hr style="background-color: #172834; width: 80%; margin-left: -0.5rem;" />
-    <p-inputNumber [(ngModel)]="discountAmount" mode="currency" currency="ILS"></p-inputNumber>
+    <p-inputNumber [(ngModel)]="this.entityEditorFormModel.discountAmount" mode="currency" currency="ILS"></p-inputNumber>
     <br /><br /><br /><br />
     <div class="row justify-content-center">
-      <button pButton type="button" class="p-button-lg mr-4" label="SAVE"></button>
+      <button pButton type="button" class="p-button-lg mr-4" label="SAVE" (click)="submitEntityModal()"></button>
     </div>
 
 

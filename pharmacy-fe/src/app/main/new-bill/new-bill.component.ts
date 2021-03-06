@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
-import { BillItem } from 'src/app/_models/Bill-item.model';
-import { Bill } from 'src/app/_models/Bill.model';
-import { Drug, toBillItem } from 'src/app/_models/Drug.model';
-import { BillEntityService } from 'src/app/_services/facade-services/bill/bill.service';
-import { BaseComponent } from 'src/app/_utils/base.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Bill } from '../../_models/bill.model';
+import { Drug } from '../../_models/drug.model';
+import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
+import { BaseComponent } from '../../_utils/base.component';
 import { DrugEntityService } from '../../_services/facade-services/drug/drug.service';
+import { ButtonsGroupActions } from '../../_utils/constants';
+import { Title } from '@angular/platform-browser';
+import { NotificationEntityService } from '../../_services/facade-services/notification/notification.service';
 @Component({
   selector: 'app-new-bill',
   templateUrl: './new-bill.component.html',
-  styleUrls: ['./new-bill.component.scss']
+  styleUrls: ['./new-bill.component.scss'],
 })
 export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
 
   drugsService: DrugEntityService;
-
-  billItems: BillItem[] = [];
 
   drugName: string;
   drugBarcode: number;
@@ -26,27 +26,41 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   discountPercentage = 0;
   discountAmount = 0;
 
-  constructor(entityService: BillEntityService, drugsService: DrugEntityService, private confirmationService: ConfirmationService) {
-    super(entityService);
-    this.drugsService = drugsService;
+  constructor(
+    entityService: BillEntityService,
+    drugsService: DrugEntityService,
+    confirmationService: ConfirmationService,
+    messageService: MessageService,
+    titleService: Title,
+    noticationService: NotificationEntityService
+    ) {
+      super(entityService, 'Bill', Bill, confirmationService, messageService, null, null, titleService, noticationService);
+      this.drugsService = drugsService;
   }
 
   ngOnInit(): void {
     this.drugsService.getAllEntities();
+    this.entityAction = ButtonsGroupActions.Add;
+    this.initNotifications();
+  }
+
+  submitEntityModal(){
+    this.entityEditorFormModel.pharmacist = {
+      id: '5d739b61b4e70f0508aad5ff',
+      pid: 8888,
+      name: 'Lana'
+    };
+    this.entityEditorFormModel.time = Math.floor(Date.now() / 1000);
+    this.entityService
+        .add(this.entityEditorFormModel.toDTO() as any as Bill)
+        .subscribe((_) => {
+          this.emitSucessToast(this.entityEditorFormModel);
+          this.entityEditorFormModel = new Bill();
+        });
   }
 
   getTotal() {
-    let total = 0;
-    this.billItems.forEach(product => {
-      total += (+product.price * +product.quantity);
-    });
-    if (this.discountPercentage !== 0) {
-      total = total * (1 - (this.discountPercentage / 100));
-    }
-    if (this.discountAmount !== 0) {
-      total -= this.discountAmount;
-    }
-    return total;
+    return this.entityEditorFormModel.calculateTotal();
   }
 
   searchDrugByName(event) {
@@ -70,7 +84,16 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
 
   addSelectedDrugFromBarcodeSearchToBill(event) {
     this.drugsService.selectEntityByBarcode(+event.barcode).subscribe((drug) => {
-      this.addDrugToBill(drug);
+      if (drug){
+        this.addDrugToBill(drug);
+      }
+      else{
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Drug Not Found!',
+          detail: 'NO Drug with such barcode!',
+        });
+      }
     });
     this.drugBarcode = undefined;
     this.drugBarcodeSearchResults = [];
@@ -83,11 +106,11 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   }
 
   addDrugToBill(drug: Drug) {
-    const drugExistingIndex = this.billItems.findIndex((item) => item.barcode === drug.barcode);
+    const drugExistingIndex = this.entityEditorFormModel.items.findIndex((item) => item.drug.barcode === drug.barcode);
     if (drugExistingIndex === -1) {
-      this.billItems.push(toBillItem(drug));
+      this.entityEditorFormModel.items.push(drug.toBillItem());
     } else {
-      this.billItems[drugExistingIndex].quantity += 1;
+      this.entityEditorFormModel.items[drugExistingIndex].quantity += 1;
     }
   }
 
@@ -95,7 +118,7 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this row?',
       accept: () => {
-        this.billItems = this.billItems.filter((item) => item.barcode !== barcode);
+        this.entityEditorFormModel.items = this.entityEditorFormModel.items.filter((item) => item.drug.barcode !== barcode);
       }
     });
   }

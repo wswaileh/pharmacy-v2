@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { createSelector } from '@ngrx/store';
+import { createSelector, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Drug } from '../../../_models/Drug.model';
+import { Drug } from '../../../_models/drug.model';
 import { BaseEntityService } from '../base-entity.service';
-
 
 @Injectable()
 export class DrugEntityService extends BaseEntityService<Drug>{
@@ -16,30 +15,40 @@ export class DrugEntityService extends BaseEntityService<Drug>{
   );
 
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('Drug', serviceElementsFactory);
+    super('Drug', Drug, serviceElementsFactory);
+  }
+
+  selectEntityById(id: number): Observable<Drug> {
+    return this.entities$.pipe(
+      map(arr => arr.find(e => {
+        return e && e.barcode === id;
+      })),
+    );
   }
 
   public selectEntitiesByName(name: string): Observable<Drug[]> {
     return this.entities$.pipe(
-      map(arr => arr.filter(e => e.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())))
+      map(arr => arr.filter(e => e.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))),
     );
   }
 
   public selectEntityByName(name: string): Observable<Drug> {
     return this.entities$.pipe(
-      map(arr => arr.find(e => e.name.toLocaleLowerCase() === name.toLocaleLowerCase()))
+      map(arr => arr.find(e => e.name.toLocaleLowerCase() === name.toLocaleLowerCase())),
     );
   }
 
   public selectEntitiesByBarcode(barcode: number): Observable<Drug[]> {
     return this.entities$.pipe(
-      map(arr => arr.filter(e => e.barcode.toString().toLocaleLowerCase().includes(barcode.toString().toLocaleLowerCase())))
+      map(arr => arr.filter(e => e.barcode.toString().toLocaleLowerCase().includes(barcode.toString().toLocaleLowerCase()))),
     );
   }
 
   public selectEntityByBarcode(barcode: number): Observable<Drug> {
     return this.entities$.pipe(
-      map(arr => arr.find(e => e.barcode === barcode))
+      map(arr => arr.find(e => {
+        return e && e.barcode === barcode;
+      })),
     );
   }
 

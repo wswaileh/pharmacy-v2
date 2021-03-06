@@ -26,11 +26,17 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BadgeModule } from 'primeng/badge';
+
 // Components
 import { EntityButtonsComponent } from './entity-buttons/entity-buttons.component';
 import { EntityContextMenuComponent } from './entity-context-menu/entity-context-menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WSidebarComponent } from './w-sidebar/w-sidebar.component';
+import { UniqueValidatorDirective } from '../_directives/unique-validator.directive';
 
 const modules = [
   FormsModule,
@@ -58,7 +64,11 @@ const modules = [
   InputTextareaModule,
   TooltipModule,
   TieredMenuModule,
-  AutoCompleteModule
+  AutoCompleteModule,
+  OverlayPanelModule,
+  BlockUIModule,
+  ProgressSpinnerModule,
+  BadgeModule
 ];
 
 const components = [
@@ -68,10 +78,24 @@ const components = [
   EntityContextMenuComponent
 ];
 
+const directives = [
+  UniqueValidatorDirective
+];
+
 @NgModule({
-  declarations: components,
-  imports: [CommonModule, ...modules],
-  exports: [...modules, ...components],
+  declarations: [
+    ...components,
+    ...directives
+  ],
+  imports: [
+    CommonModule,
+    ...modules
+  ],
+  exports: [
+    ...modules,
+    ...components,
+    ...directives
+  ],
   providers: [ConfirmationService, MessageService]
 })
 export class SharedModule { }

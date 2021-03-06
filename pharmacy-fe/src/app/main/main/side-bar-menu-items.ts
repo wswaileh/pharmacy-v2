@@ -2,6 +2,17 @@ import { SideBarItemsGroup } from '../../shared-module/w-sidebar/w-sidebar.compo
 
 export const sidebarItems: SideBarItemsGroup[] = [
   {
+    itemName: '',
+    items: [
+      {
+        itemName: 'Expiries',
+        routerLink: '/main/notifications',
+        icon: 'fas fa-bell',
+        isWithNotificationCount: true
+      }
+    ]
+  },
+  {
     itemName: 'Drugs',
     items: [
       {
@@ -13,9 +24,7 @@ export const sidebarItems: SideBarItemsGroup[] = [
   },
   {
     itemName: 'Bills',
-    items: [
-      // TODO: Create new bath for all bills page
-      {
+    items: [      {
         itemName: 'New Bill',
         routerLink: '/main/new-bill',
         icon: 'fas fa-plus-square'
@@ -30,7 +39,6 @@ export const sidebarItems: SideBarItemsGroup[] = [
   {
     itemName: 'Reports',
     items: [
-      // TODO: Create new bath for all bills page
       {
         itemName: 'Reports',
         routerLink: '/sfaf',
@@ -42,7 +50,6 @@ export const sidebarItems: SideBarItemsGroup[] = [
   {
     itemName: 'Administration',
     items: [
-      // TODO: Create new bath for all bills page
       {
         itemName: 'Edit Users',
         routerLink: '/main/users',

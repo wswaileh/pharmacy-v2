@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { Bill } from '../../../_models/Bill.model';
+import { Bill } from '../../../_models/bill.model';
 import { BaseEntityService } from '../base-entity.service';
 
 
@@ -8,7 +8,7 @@ import { BaseEntityService } from '../base-entity.service';
 export class BillEntityService extends BaseEntityService<Bill>{
 
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('Bill', serviceElementsFactory);
+    super('Bill', Bill, serviceElementsFactory);
   }
 
 }

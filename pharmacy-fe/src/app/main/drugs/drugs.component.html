@@ -1,12 +1,72 @@
-<p-toast></p-toast>
-<app-entity-context-menu #cm [items]="contextMenuItems"></app-entity-context-menu>
+<p-toast [baseZIndex]="1000"></p-toast>
 
+<app-entity-context-menu #cm [items]="contextMenuItems"></app-entity-context-menu>
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button type="button" class="p-button-secondary" pButton icon="pi pi-times" label="No"
+      (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Delete" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<!-- Entity Modal -->
+<p-dialog [header]="entityModalTitle" [(visible)]="entityModalOpened" [style]="{width: '450px'}" [modal]="true"
+  styleClass="p-fluid" (onHide)="closeEntityModal()">
+  <form class="row" #entityForm="ngForm" autocomplete="off">
+    <div class="col-12">
+
+      <div *ngIf="entityAction === 'Duplicate'; else noBarcodeValidationBlock" class="p-field">
+        <label for="name">Barcode<span class="text-danger">*</span></label>
+        <input type="number" pInputText id="barcode" name="barcode" #barcode="ngModel"
+          [(ngModel)]="entityEditorFormModel.barcode" required appUniqueValidator [annotationList]="uniqueBarcodes"/>
+        <small class="p-error" *ngIf="barcode.touched && barcode.invalid && !barcode.errors.isDuplicate">Barcode is required. (and should be a
+          number)</small>
+        <small class="p-error" *ngIf="barcode.invalid && barcode.errors.isDuplicate">Barcode already Exists!</small>
+      </div>
+
+      <ng-template #noBarcodeValidationBlock>
+        <div class="p-field">
+          <label for="name">Barcode<span class="text-danger">*</span></label>
+          <input type="number" pInputText id="barcode" name="barcode" #barcode="ngModel"
+            [(ngModel)]="entityEditorFormModel.barcode" required />
+          <small class="p-error" *ngIf="barcode.touched && barcode.invalid">Barcode is required. (and should be a
+            number)</small>
+        </div>
+      </ng-template>
+
+      <div class="p-field mt-4">
+        <label for="name">Name<span class="text-danger">*</span></label>
+        <input type="text" pInputText id="name" name="name" #name="ngModel" [(ngModel)]="entityEditorFormModel.name"
+          required />
+        <small class="p-error" *ngIf="name.touched && name.invalid">Name is required.</small>
+      </div>
+      <div class="p-field mt-4">
+        <label for="name">Cost Price <small class="font-weight-light font-italic"> - Optional</small></label>
+        <input type="number" pInputText id="costPrice" name="costPrice" #costPrice="ngModel"
+          [(ngModel)]="entityEditorFormModel.costPrice" />
+      </div>
+      <div class="p-field mt-4">
+        <label for="name">Selling Price<span class="text-danger">*</span></label>
+        <input type="number" pInputText id="sellingPrice" name="sellingPrice" #sellingPrice="ngModel"
+          [(ngModel)]="entityEditorFormModel.sellingPrice" required />
+        <small class="p-error" *ngIf="sellingPrice.touched && sellingPrice.invalid">Selling Price is required.</small>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text text-danger"
+      (click)="closeEntityModal()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text mr-0" (click)="submitEntityModal()"
+      [disabled]="entityForm.invalid"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Entity Table -->
 <div class="row align-middle">
   <div class="col align-self-start">
-
     <span class="p-input-icon-left mt-1 ml-1" style="width: 100%;">
       <i class="pi pi-search"></i>
-      <input pInputText type="text" class="w-100" (input)="dt.filterGlobal($event.target.value, 'contains')"
+      <input pInputText type="text" class="w-100" (input)="dt.filterGlobal($event.target.value, 'startsWith')"
         placeholder="Search For a Product Using Name / Barcode" />
     </span>
   </div>
@@ -15,25 +75,23 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" style="height: calc(100% - 50px);">
   <p-table #dt [value]="entities" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm" dataKey="barcode"
-    [paginator]="true" [rows]="11" [showCurrentPageReport]="true" [loading]="isLoading"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[11,25,50]"
-    [globalFilterFields]="['name','barcode']">
+    [showCurrentPageReport]="true" selectionMode="single" [(selection)]="selectedEntity"
+    [globalFilterFields]="['name','barcode']" [scrollable]="true" scrollHeight="680px">
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="barcode">
           <div class="p-d-flex p-jc-between p-ai-center">
-            Barode
-            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            Barcode
             <p-sortIcon field="barcode"></p-sortIcon>
           </div>
         </th>
         <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
         </th>
-        <th pSortableColumn="cost_price">Cost Price <p-sortIcon field="cost_price"></p-sortIcon>
+        <th pSortableColumn="costPrice">Cost Price <p-sortIcon field="costPrice"></p-sortIcon>
         </th>
-        <th pSortableColumn="selling_price">Selling Price <p-sortIcon field="selling_price"></p-sortIcon>
+        <th pSortableColumn="sellingPrice">Selling Price <p-sortIcon field="costPrice"></p-sortIcon>
         </th>
         <!-- <th>Quantity</th> -->
         <!-- <th>Company</th> -->
@@ -41,11 +99,12 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-drug>
-      <tr [pContextMenuRow]="drug" pTooltip="Right Click Me To Edit" tooltipPosition="bottom">
+      <tr [pSelectableRow]="drug" [pContextMenuRow]="drug" pTooltip="Right Click Me To Edit" tooltipPosition="bottom"
+        id="{{drug.barcode}}">
         <td>{{drug.barcode}}</td>
         <td>{{drug.name}}</td>
-        <td>{{drug.cost_price | currency: 'ILS' }}</td>
-        <td>{{drug.selling_price | currency: 'ILS' }}</td>
+        <td>{{drug.costPrice | currency: 'ILS' }}</td>
+        <td>{{drug.sellingPrice | currency: 'ILS' }}</td>
         <!-- <td>{{drug.quantity}}</td> -->
         <!-- <td>{{drug.company}}</td> -->
         <!-- <td>{{drug.expiry}}</td> -->
