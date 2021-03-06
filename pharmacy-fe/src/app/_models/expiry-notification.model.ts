@@ -22,6 +22,7 @@ export class ExpiryNotification implements IBaseModel<IExpiryNotificationDTO, IE
   }
   toDTO(): IExpiryNotificationDTO {
     return {
+      id: this.id,
       expiringDrug: this.expiringDrug,
       reminderDate: this.reminderDate
     } as IExpiryNotificationDTO;

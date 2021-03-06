@@ -1,3 +1,5 @@
+<!-- Toast -->
+<p-toast [baseZIndex]="1000"></p-toast>
 <!-- Context Menu -->
 <app-entity-context-menu #cm [items]="contextMenuItems"></app-entity-context-menu>
 <!-- Confirmation Service -->
@@ -50,7 +52,7 @@
   </div>
 
   <div class="card" style="height: calc(100% - 50px);">
-    <p-table [value]="entities" [scrollable]="true" scrollHeight="680px" selectionMode="single"
+    <p-table [value]="entities" [scrollable]="true" scrollHeight="680px" selectionMode="single" dataKey="id"
       [(selection)]="selectedEntity" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm">
       <ng-template pTemplate="header">
         <tr>

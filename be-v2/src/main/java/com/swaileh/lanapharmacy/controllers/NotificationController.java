@@ -1,5 +1,6 @@
 package com.swaileh.lanapharmacy.controllers;
 
+import com.swaileh.lanapharmacy.models.drug.Drug;
 import com.swaileh.lanapharmacy.models.exceptions.BadRequestException;
 import com.swaileh.lanapharmacy.models.exceptions.ResourceNotFoundException;
 import com.swaileh.lanapharmacy.models.notification.ExpiryNotification;
@@ -23,6 +24,13 @@ public class NotificationController {
 
     @PostMapping
     public ExpiryNotification saveNotification(@RequestBody ExpiryNotification expiryNotification) throws BadRequestException { return notificationService.save(expiryNotification); }
+
+    @PutMapping("/{id}")
+    public ExpiryNotification editNotification(@PathVariable(value = "id") String id, @RequestBody ExpiryNotification newExpiryNotification)
+        throws ResourceNotFoundException, BadRequestException {
+
+        return notificationService.update(newExpiryNotification);
+    }
 
     @DeleteMapping
     public void deleteNotification(@PathVariable(value = "id") String id) throws ResourceNotFoundException {

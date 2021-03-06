@@ -36,6 +36,8 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
 
   public entityIdAttriuteName;
 
+  public errors: any[];
+
   public confirmationService: ConfirmationService;
   public messageService: MessageService;
   public route: ActivatedRoute;
@@ -77,6 +79,7 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
     this.route = route;
     this.titleService = titleService;
     this.notificationService = notificationService;
+    this.errors = [];
   }
 
   ngOnInit(): void {
@@ -90,6 +93,8 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
     });
 
     this.initNotifications();
+
+    this.entityService.errors$.subscribe((error) => this.handleError(error.payload.data.error));
   }
 
   initNotifications() {
@@ -160,8 +165,6 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
   }
 
   entityActions(actionType) {
-    console.log('heeere');
-    console.log(actionType);
     this.entityAction = actionType;
     switch (actionType) {
       case ButtonsGroupActions.Add:
@@ -201,6 +204,14 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
     }
   }
 
+  emitFailureToast(summary, detail){
+    this.messageService.add({
+      severity: 'error',
+      summary,
+      detail
+    });
+  }
+
   emitSucessToast(entity) {
     this.messageService.add({
       severity: 'success',
@@ -215,5 +226,13 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
 
   getEntityDeletionMessage(entity) {
     return 'Are you sure that you want to delete ?';
+  }
+
+  handleError(error) {
+    console.log(error);
+    this.errors = [];
+    if (error) {
+      this.emitFailureToast('Error', error.message);
+    }
   }
 }

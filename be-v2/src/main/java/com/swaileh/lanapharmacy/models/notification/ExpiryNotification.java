@@ -15,8 +15,6 @@ public class ExpiryNotification extends BaseEntityModel implements Comparable<Ex
 
     private Date reminderDate;
 
-    private Boolean read;
-
     public Drug getExpiringDrug() {
         return expiringDrug;
     }
@@ -33,13 +31,6 @@ public class ExpiryNotification extends BaseEntityModel implements Comparable<Ex
         this.reminderDate = reminderDate;
     }
 
-    public Boolean getRead() {
-        return read;
-    }
-
-    public void setRead(Boolean read) {
-        this.read = read;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -50,8 +41,7 @@ public class ExpiryNotification extends BaseEntityModel implements Comparable<Ex
         ExpiryNotification that = (ExpiryNotification) o;
 
         if (!Objects.equals(expiringDrug, that.expiringDrug)) return false;
-        if (!Objects.equals(reminderDate, that.reminderDate)) return false;
-        return Objects.equals(read, that.read);
+        return Objects.equals(reminderDate, that.reminderDate);
     }
 
     @Override
@@ -59,7 +49,6 @@ public class ExpiryNotification extends BaseEntityModel implements Comparable<Ex
         int result = super.hashCode();
         result = 31 * result + (expiringDrug != null ? expiringDrug.hashCode() : 0);
         result = 31 * result + (reminderDate != null ? reminderDate.hashCode() : 0);
-        result = 31 * result + (read != null ? read.hashCode() : 0);
         return result;
     }
 
@@ -68,7 +57,6 @@ public class ExpiryNotification extends BaseEntityModel implements Comparable<Ex
         return "ExpiryNotification{" +
             "expiringDrug=" + expiringDrug +
             ", reminderDate=" + reminderDate +
-            ", read=" + read +
             '}';
     }
 
