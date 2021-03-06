@@ -16,8 +16,6 @@ export class NotificationEntityService extends BaseEntityService<ExpiryNotificat
     const currentDate = new Date();
     return this.entities$.pipe(
       map(e => {
-        console.log(e.filter(item => item.reminderDate.getMonth === currentDate.getMonth
-          && item.reminderDate.getFullYear() === currentDate.getFullYear()));
         return e ?
           e.filter(item => item.reminderDate.getMonth() === currentDate.getMonth()
             && item.reminderDate.getFullYear() === currentDate.getFullYear())

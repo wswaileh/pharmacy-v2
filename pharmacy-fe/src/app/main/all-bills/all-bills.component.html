@@ -21,6 +21,7 @@
           <tr>
               <th pSortableColumn="name">Name</th>
               <th>Quantity</th>
+              <th>Price</th>
               <th>Details</th>
           </tr>
       </ng-template>
@@ -28,6 +29,7 @@
           <tr>
               <td>{{product?.drug?.name}}</td>
               <td>{{product?.quantity}}</td>
+              <td>{{product?.price}}</td>
               <td><a routerLink="/main/drugs/{{product?.drug?.barcode}}" target="_blank">Details</a></td>
           </tr>
       </ng-template>

@@ -108,7 +108,12 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   addDrugToBill(drug: Drug) {
     const drugExistingIndex = this.entityEditorFormModel.items.findIndex((item) => item.drug.barcode === drug.barcode);
     if (drugExistingIndex === -1) {
-      this.entityEditorFormModel.items.push(drug.toBillItem());
+      if (this.selectedEntity instanceof Drug) {
+        this.entityEditorFormModel.items.push(drug.toBillItem());
+      } else {
+        this.entityEditorFormModel.items.push(new Drug().fromDTO(drug).toBillItem());
+      }
+
     } else {
       this.entityEditorFormModel.items[drugExistingIndex].quantity += 1;
     }
