@@ -32,7 +32,7 @@ public class NotificationController {
         return notificationService.update(newExpiryNotification);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteNotification(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
         notificationService.delete(id);
     }

@@ -70,6 +70,15 @@ export class DrugsComponent extends BaseComponent<Drug> implements OnInit {
     }
   }
 
+  entityActions(event){
+    if (event === ButtonsGroupActions.Edit){
+      this.uniqueBarcodes = this.uniqueBarcodes.filter(e => e !== this.selectedEntity.barcode);
+    } else {
+      this.uniqueBarcodes = this.entities.map(e => e.barcode);
+    }
+    super.entityActions(event);
+  }
+
   afterEntityUpdate() {
     this.billService.getAll();
   }

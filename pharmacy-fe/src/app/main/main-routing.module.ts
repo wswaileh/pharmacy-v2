@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CanDeactivateGuard } from '../_services/can-deactivate-guard/can-deactivate-guard.service';
 import { AllBillsComponent } from './all-bills/all-bills.component';
 import { DrugsComponent } from './drugs/drugs.component';
 import { MainComponent } from './main/main.component';
@@ -22,7 +23,8 @@ const routes: any = [
       },
       {
         path: 'new-bill',
-        component: NewBillComponent
+        component: NewBillComponent,
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: 'bills',

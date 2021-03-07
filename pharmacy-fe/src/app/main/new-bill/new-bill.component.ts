@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Bill } from '../../_models/bill.model';
 import { Drug } from '../../_models/drug.model';
@@ -8,6 +8,8 @@ import { DrugEntityService } from '../../_services/facade-services/drug/drug.ser
 import { ButtonsGroupActions } from '../../_utils/constants';
 import { Title } from '@angular/platform-browser';
 import { NotificationEntityService } from '../../_services/facade-services/notification/notification.service';
+import { Observable, of } from 'rxjs';
+
 @Component({
   selector: 'app-new-bill',
   templateUrl: './new-bill.component.html',
@@ -33,9 +35,9 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
     messageService: MessageService,
     titleService: Title,
     noticationService: NotificationEntityService
-    ) {
-      super(entityService, 'Bill', Bill, confirmationService, messageService, null, null, titleService, noticationService);
-      this.drugsService = drugsService;
+  ) {
+    super(entityService, 'Bill', Bill, confirmationService, messageService, null, null, titleService, noticationService);
+    this.drugsService = drugsService;
   }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
     this.initNotifications();
   }
 
-  submitEntityModal(){
+  submitEntityModal() {
     this.entityEditorFormModel.pharmacist = {
       id: '5d739b61b4e70f0508aad5ff',
       pid: 8888,
@@ -52,11 +54,11 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
     };
     this.entityEditorFormModel.time = Math.floor(Date.now() / 1000);
     this.entityService
-        .add(this.entityEditorFormModel.toDTO() as any as Bill)
-        .subscribe((_) => {
-          this.emitSucessToast(this.entityEditorFormModel);
-          this.entityEditorFormModel = new Bill();
-        });
+      .add(this.entityEditorFormModel.toDTO() as any as Bill)
+      .subscribe((_) => {
+        this.emitSucessToast(this.entityEditorFormModel);
+        this.entityEditorFormModel = new Bill();
+      });
   }
 
   getTotal() {
@@ -77,6 +79,7 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   }
 
   searchDrugByBarcode(event) {
+    console.log('here');
     this.drugsService.selectEntitiesByBarcode(event.query).subscribe((drug) => {
       this.drugBarcodeSearchResults = drug;
     });
@@ -84,10 +87,10 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
 
   addSelectedDrugFromBarcodeSearchToBill(event) {
     this.drugsService.selectEntityByBarcode(+event.barcode).subscribe((drug) => {
-      if (drug){
+      if (drug) {
         this.addDrugToBill(drug);
       }
-      else{
+      else {
         this.messageService.add({
           severity: 'error',
           summary: 'Drug Not Found!',
@@ -100,7 +103,7 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   }
 
   barcodeFieldKeyUp(event) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && this.drugBarcode !== null && this.drugBarcode.toString().trim() !== '') {
       this.addSelectedDrugFromBarcodeSearchToBill({ barcode: this.drugBarcode });
     }
   }
@@ -126,5 +129,14 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
         this.entityEditorFormModel.items = this.entityEditorFormModel.items.filter((item) => item.drug.barcode !== barcode);
       }
     });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.entityEditorFormModel.items && this.entityEditorFormModel.items.length > 0) {
+
+      const result = window.confirm('Bill is NOT saved, Are you sure you want to discard Bill?');
+      return of(result);
+    }
+    return true;
   }
 }

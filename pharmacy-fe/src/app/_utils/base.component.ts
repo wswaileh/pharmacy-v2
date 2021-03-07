@@ -113,6 +113,7 @@ export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implem
         notificationsItem.notificationsCount = notificationsCount;
         notificationsItem.isWithNotificationCount = true;
       } else {
+        this.titleService.setTitle('Lana Pharmacy');
         const notificationsItem = sidebarItems.find(item => item.itemName === '').
           items.find(subItem => subItem.itemName === 'Expiries');
         notificationsItem.notificationsCount = notificationsCount;

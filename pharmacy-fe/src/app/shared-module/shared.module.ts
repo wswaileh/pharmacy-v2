@@ -37,6 +37,7 @@ import { EntityContextMenuComponent } from './entity-context-menu/entity-context
 import { NavbarComponent } from './navbar/navbar.component';
 import { WSidebarComponent } from './w-sidebar/w-sidebar.component';
 import { UniqueValidatorDirective } from '../_directives/unique-validator.directive';
+import { CanDeactivateGuard } from '../_services/can-deactivate-guard/can-deactivate-guard.service';
 
 const modules = [
   FormsModule,
@@ -96,6 +97,6 @@ const directives = [
     ...components,
     ...directives
   ],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService, CanDeactivateGuard]
 })
 export class SharedModule { }
