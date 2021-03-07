@@ -11,7 +11,7 @@
 	<groupId>com.swaileh</groupId>
 	<artifactId>lanapharmacy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>lanapharmacy</name>
 	<description>Small Project for Lana Pharamcy</description>
 	<properties>
