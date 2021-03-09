@@ -14,5 +14,5 @@ COPY . .
 RUN mvn package
 
 # set the startup command to run your binary
-CMD ["java", "-jar", "./target/my-project.jar"]
+CMD ["java", "-jar", "./target/lanapharmacy-0.0.1-SNAPSHOT.jar"]
 
