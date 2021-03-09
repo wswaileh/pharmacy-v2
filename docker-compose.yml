@@ -8,7 +8,7 @@ services:
     networks:
       - lana-pharmacy
     volumes:
-      - mongo-data:/home/swaileh/jenkins
+      - mongo-data:/var/lib/jenkins/mongo
   spring:
     build: ./be-v2
     container_name: pharmacy-be
