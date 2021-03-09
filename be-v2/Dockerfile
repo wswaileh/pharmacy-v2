@@ -1,17 +1,18 @@
-FROM openjdk:11.0.7-jre-slim
+# select image
+FROM maven:3.5-jdk-8
 
-# ./mvnw package && java -jar target/lanapharmacy-0.0.1-SNAPSHOT.jar
+# copy the project files
+COPY ./pom.xml ./pom.xml
 
-# run under a user. This makes the whole thing more secure
-RUN groupadd normalgroup
-RUN useradd -G normalgroup normaluser
-USER normaluser:normalgroup
+# build all dependencies for offline use
+RUN mvn dependency:go-offline -B
 
+# copy your other files
+COPY ./src ./src
+
+# build for release
 RUN mvn package
 
-# run app
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-
+# set the startup command to run your binary
+CMD ["java", "-jar", "./target/my-project.jar"]
 
