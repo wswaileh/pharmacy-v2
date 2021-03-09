@@ -7,7 +7,7 @@ pipeline {
 
                 sh '''
                     #!/bin/bash
-                    docker-compose build
+                    sudo docker-compose build
                 '''
             }
         }
