@@ -1,7 +1,9 @@
 package com.swaileh.lanapharmacy;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -51,6 +53,9 @@ public class LanaPharmacyApplication {
                 + "External: \t{}://{}:{}{}\n\t",
             env.getProperty("spring.application.name"), protocol, serverPort, contextPath, protocol, hostAddress,
             serverPort, contextPath);
+
+        log.info(
+            "\n----------------------------------------------------------\n");
     }
 
     @Bean
