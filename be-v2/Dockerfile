@@ -7,7 +7,7 @@ RUN groupadd normalgroup
 RUN useradd -G normalgroup normaluser
 USER normaluser:normalgroup
 
-RUN ./mvnw package
+RUN mvnw package
 
 # run app
 ARG JAR_FILE=target/*.jar
