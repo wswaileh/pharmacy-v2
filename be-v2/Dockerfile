@@ -8,7 +8,7 @@ COPY ./pom.xml ./pom.xml
 RUN mvn dependency:go-offline -B
 
 # copy your other files
-COPY ./src ./src
+COPY /src /src
 
 # build for release
 RUN mvn package
