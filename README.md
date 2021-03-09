@@ -1,3 +1,3 @@
 # pharmacy-v2
 
-projecttttt
+project
