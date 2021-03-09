@@ -18,13 +18,13 @@ services:
       - mongo
     networks:
       - lana-pharmacy
-  angular:
-    build: ./pharmacy-fe
-    container_name: pharmacy-fe
-    ports:
-        - '80:80'
-    networks:
-      - lana-pharmacy
+  #angular:
+    #build: ./pharmacy-fe
+    #container_name: pharmacy-fe
+    #ports:
+    #    - '80:80'
+    #networks:
+    #  - lana-pharmacy
 networks:
     lana-pharmacy:
         driver: bridge
