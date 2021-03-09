@@ -7,6 +7,8 @@ COPY ./pom.xml ./pom.xml
 # build all dependencies for offline use
 RUN mvn dependency:go-offline -B
 
+RUN ls
+
 # copy your other files
 COPY ./src ./src
 
