@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - lana-pharmacy
+    volumes:
+      - mongo-data:/var/lib/data/db
+  spring:
+    build: ./be-v2
+    container_name: pharmacy-be
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    networks:
+      - lana-pharmacy
+  angular:
+    build: ./pharmacy-fe
+    container_name: pharmacy-fe
+    ports:
+        - '80:80'
+    networks:
+      - lana-pharmacy
+networks:
+    lana-pharmacy:
+        driver: bridge
+volumes:
+    mongo-data:
