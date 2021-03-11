@@ -1,5 +1,5 @@
 #Step 1
-FROM node:12-alpine as build-step
+FROM node:14-alpine as build-step
 WORKDIR /app
 COPY package.json /app
 RUN npm install
