@@ -8,4 +8,4 @@ RUN npm run build
 
 # Step 2
 FROM nginx:1.17.1-alpine
-COPY --from=build-step app/dist/pharmacy-fe /usr/share/nginx/html
+COPY --from=build-step app/dist/fe-v2 /usr/share/nginx/html

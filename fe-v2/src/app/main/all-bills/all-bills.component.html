@@ -1,0 +1,63 @@
+<!-- Loading Spinner -->
+<!-- <div class="spinner-wrapper" *ngIf="isLoading">
+  <p-progressSpinner></p-progressSpinner>
+</div> -->
+
+<p-toast [baseZIndex]="1000"></p-toast>
+<p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+
+<app-entity-buttons [entityName]="'Bill'" (clicked)="entityActions($event)"></app-entity-buttons>
+
+<p-overlayPanel #priceOp [dismissable]="true" [showCloseIcon]="true" >
+  <p><b>Total:</b> {{selectedEntity?.total | currency: 'ILS'}}</p>
+  <p><b>Discount:</b> {{selectedEntity?.discountAmount | currency: 'ILS'}}</p>
+  <p><b>Discount Percentage:</b> {{selectedEntity?.discountPercentage}}%</p>
+</p-overlayPanel>
+
+<p-overlayPanel #itemsOp [dismissable]="true" [showCloseIcon]="true" [style]="{width: '450px'}">
+  <ng-template pTemplate>
+    <p-table [value]="selectedEntity.items" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+          <tr>
+              <th pSortableColumn="name">Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Details</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-product>
+          <tr>
+              <td>{{product?.drug?.name}}</td>
+              <td>{{product?.quantity}}</td>
+              <td>{{product?.price}}</td>
+              <td><a routerLink="/main/drugs/{{product?.drug?.barcode}}" target="_blank">Details</a></td>
+          </tr>
+      </ng-template>
+  </p-table>
+  </ng-template>
+</p-overlayPanel>
+
+<div class="card">
+  <p-table [value]="entities" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm" [loading]="isLoading"
+    [paginator]="true" [rows]="11" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[11,25,50]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Pharmacist</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Total</th>
+        <th>Items</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bill>
+      <tr [pContextMenuRow]="bill">
+        <td>{{bill?.pharmacist?.name}}</td>
+        <td>{{bill?.time * 1000 | date: 'mediumDate'}}</td>
+        <td>{{bill?.time * 1000 | date:'shortTime'}}</td>
+        <td><a class="text-primary" (click)="selectedEntity=bill; priceOp.toggle($event)">{{bill.total | currency: 'ILS' }}</a></td>
+        <td #actualTarget><a class="text-primary" (click)="selectedEntity=bill; itemsOp.toggle($event)">{{bill?.items?.length}} Item<span *ngIf="bill?.items?.length > 1">s</span></a></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

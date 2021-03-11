@@ -1,0 +1,74 @@
+<!-- Toast -->
+<p-toast [baseZIndex]="1000"></p-toast>
+<!-- Context Menu -->
+<app-entity-context-menu #cm [items]="contextMenuItems"></app-entity-context-menu>
+<!-- Confirmation Service -->
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button type="button" class="p-button-secondary" pButton icon="pi pi-times" label="No"
+      (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Delete" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+<!-- Entity Modal -->
+<p-dialog [header]="entityModalTitle" [(visible)]="entityModalOpened" [style]="{width: '450px'}" [modal]="true"
+  styleClass="p-fluid" (onHide)="closeEntityModal()">
+  <form class="row" #entityForm="ngForm" autocomplete="off">
+    <div class="col-12" style="min-height: 400px;">
+
+      <div class="p-field mt-1">
+        <label for="name">Reminder Date<span class="text-danger">*</span></label>
+        <p-calendar [(ngModel)]="entityEditorFormModel.reminderDate" view="month" dateFormat="mm/yy"
+          [yearNavigator]="true" yearRange="2021:2030" required #date=ngModel name="date" [readonlyInput]="true"
+          [minDate]="minimumDate">
+        </p-calendar>
+        <small class="p-error" *ngIf="date.touched && date.invalid">Date is required.</small>
+      </div>
+
+      <div class="p-field mt-4">
+        <label for="name">Drug<span class="text-danger">*</span></label>
+        <p-autoComplete [(ngModel)]="entityEditorFormModel.expiringDrug" [suggestions]="results"
+          (completeMethod)="search($event)" field="name" name="drugs" #drugs="ngModel" required></p-autoComplete>
+        <small class="p-error" *ngIf="drugs.touched && drugs.invalid">Drug is required.</small>
+      </div>
+
+
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text text-danger"
+      (click)="closeEntityModal()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text mr-0" (click)="submitEntityModal()"
+      [disabled]="entityForm.invalid"></button>
+  </ng-template>
+</p-dialog>
+
+<div class="row align-middle m-0">
+  <div class="col align-self-start">
+
+  </div>
+  <div class="col align-self-end">
+    <app-entity-buttons [entityName]="'Expiry Reminder'" (clicked)="entityActions($event)"></app-entity-buttons>
+  </div>
+
+  <div class="card" style="height: calc(100% - 50px);">
+    <p-table [value]="entities" [scrollable]="true" scrollHeight="680px" selectionMode="single" dataKey="id"
+      [(selection)]="selectedEntity" [(contextMenuSelection)]="selectedEntity" [contextMenu]="cm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">Drug Name</th>
+          <th>Expiry Date</th>
+          <th>Drug Details</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-notification>
+        <tr [pSelectableRow]="notification" [pContextMenuRow]="notification" pTooltip="Right Click Me To Edit"
+          tooltipPosition="bottom">
+          <td>{{notification?.expiringDrug?.name }}</td>
+          <td>{{notification?.reminderDate | date: 'MM/yyyy'}}</td>
+          <td><a routerLink="/main/drugs/{{notification?.expiringDrug?.barcode}}" target="_blank">Details</a></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
