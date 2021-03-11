@@ -6,7 +6,7 @@ export interface SideBarItem {
   icon: string;
   isDisabled?: boolean;
   isWithNotificationCount?: boolean;
-  notificationsCount?: number;
+  notificationsCount?: string;
 }
 
 export interface SideBarItemsGroup {

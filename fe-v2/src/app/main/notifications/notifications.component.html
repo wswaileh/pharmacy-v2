@@ -19,16 +19,18 @@
       <div class="p-field mt-1">
         <label for="name">Reminder Date<span class="text-danger">*</span></label>
         <p-calendar [(ngModel)]="entityEditorFormModel.reminderDate" view="month" dateFormat="mm/yy"
-          [yearNavigator]="true" yearRange="2021:2030" required #date=ngModel name="date" [readonlyInput]="true"
+          [yearNavigator]="true" yearRange="2021:2030" #date=ngModel name="date" [readonlyInput]="true"
           [minDate]="minimumDate">
         </p-calendar>
+        <input type="hidden" [(ngModel)]="entityEditorFormModel.reminderDate" required>
         <small class="p-error" *ngIf="date.touched && date.invalid">Date is required.</small>
       </div>
 
       <div class="p-field mt-4">
         <label for="name">Drug<span class="text-danger">*</span></label>
         <p-autoComplete [(ngModel)]="entityEditorFormModel.expiringDrug" [suggestions]="results"
-          (completeMethod)="search($event)" field="name" name="drugs" #drugs="ngModel" required></p-autoComplete>
+          (completeMethod)="search($event)" field="name" name="drugs" #drugs="ngModel"></p-autoComplete>
+        <input type="hidden" [(ngModel)]="entityEditorFormModel.expiringDrug" required>
         <small class="p-error" *ngIf="drugs.touched && drugs.invalid">Drug is required.</small>
       </div>
 

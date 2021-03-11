@@ -13,7 +13,7 @@
           <div class="row">
             <div class="col-2">
               <i *ngIf="!subItem.isWithNotificationCount" class="{{subItem.icon}} mr-1"></i>
-              <i *ngIf="subItem.isWithNotificationCount" class="{{subItem.icon}} mr-1" pBadge [value]="subItem.notificationsCount"></i>
+              <i *ngIf="subItem.isWithNotificationCount" class="{{subItem.icon}} mr-1" pBadge [value]="subItem.notificationsCount + ''"></i>
             </div>
             <div class="col-9 font-weight-light">
               {{ subItem.itemName }}

@@ -6,7 +6,7 @@ export interface SideBarItem {
   icon: string;
   isDisabled?: boolean;
   isWithNotificationCount?: boolean;
-  notificationsCount?: number;
+  notificationsCount?: string;
 }
 
 export interface SideBarItemsGroup {
@@ -25,7 +25,9 @@ export class WSidebarComponent implements OnInit {
 
   @Input() isOpen: boolean;
 
-  constructor() { }
+  constructor() {
+    this.items = [];
+  }
 
   ngOnInit(): void {
   }
