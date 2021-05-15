@@ -15,7 +15,7 @@ import { BillDataService } from '../_services/data-services/bill/bill.data.servi
 import { NotificationDataService } from '../_services/data-services/notification/notification.data.service';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: 'http://localhost:3001/',
+  root: 'http://host.docker.internal:3001/',
   timeout: 3000, // request timeout
 };
 
