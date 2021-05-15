@@ -25,6 +25,8 @@ services:
         - '80:80'
     networks:
       - lana-pharmacy
+    environment:
+    - REST_API_URL=http://spring:3001
 networks:
     lana-pharmacy:
         driver: bridge
