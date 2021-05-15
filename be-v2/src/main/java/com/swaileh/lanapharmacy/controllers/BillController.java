@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RequestMapping("/bills")
+@RequestMapping("/api/bills")
 @RestController
 public class BillController {
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RequestMapping("/drugs")
+@RequestMapping("/api/drugs")
 @RestController
 public class DrugController {
 
