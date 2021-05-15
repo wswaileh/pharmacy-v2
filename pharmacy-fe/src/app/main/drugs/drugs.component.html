@@ -67,7 +67,7 @@
   <div class="col align-self-start">
     <span class="p-input-icon-left mt-1 ml-1" style="width: 100%;">
       <i class="pi pi-search"></i>
-      <input pInputText type="text" class="w-100" (input)="dt.filterGlobal($event.target.value, 'startsWith')"
+      <input pInputText type="text" class="w-100" (input)="dt.filterGlobal($event.target?.value || '', 'startsWith')"
         placeholder="Search For a Product Using Name / Barcode" />
     </span>
   </div>

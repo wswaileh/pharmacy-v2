@@ -19,7 +19,7 @@
     <div class="p-d-flex mt-3 mb-3">
       <span class="p-input-icon-left p-ml-auto w-100">
         <h5>Search Drugs by barcode</h5>
-        <p-autoComplete autofocus="true" emptyMessage="No drug with such barcode found" [(ngModel)]="drugBarcode"
+        <p-autoComplete [autofocus]="true" emptyMessage="No drug with such barcode found" [(ngModel)]="drugBarcode"
           [suggestions]="drugBarcodeSearchResults" (completeMethod)="searchDrugByBarcode($event)"
           (onSelect)="addSelectedDrugFromBarcodeSearchToBill($event)" (onKeyUp)="barcodeFieldKeyUp($event)">
           <ng-template let-brand pTemplate="item">

@@ -1,2 +1,4 @@
 mongorestore -d [your_db_name] [your_dump_dir]
 mongorestore -d Pharmacy Pharmacy
+
+mongorestore -d pharmacy db-dump
