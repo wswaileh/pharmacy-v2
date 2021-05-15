@@ -2,14 +2,14 @@ import { OnInit, Directive, ViewChild } from '@angular/core';
 import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
 import { BaseEntityService } from '../_services/facade-services/base-entity.service';
 import { ButtonsGroupActions } from '../_utils/constants';
-import { IBaseModel, IBaseDTO } from '../_models/base.model';
+import { IBaseModel, IBaseDTO } from '../models/base.model';
 import { NgForm } from '@angular/forms';
 import { BaseDataService } from '../_services/data-services/base-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { sidebarItems } from '../main/main/side-bar-menu-items';
 import { NotificationEntityService } from '../_services/facade-services/notification/notification.service';
-import { ExpiryNotification } from '../_models/expiry-notification.model';
+import { ExpiryNotification } from '../models/expiry-notification.model';
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
 export class BaseComponent<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> implements OnInit {

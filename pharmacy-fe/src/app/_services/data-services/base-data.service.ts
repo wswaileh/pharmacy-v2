@@ -1,5 +1,5 @@
 import { DefaultDataService, HttpUrlGenerator, DefaultDataServiceConfig } from '@ngrx/data';
-import { IBaseModel, IBaseDTO } from '../../_models/base.model';
+import { IBaseModel, IBaseDTO } from '../../models/base.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

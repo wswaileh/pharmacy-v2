@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
-import { Bill } from '../../_models/bill.model';
+import { Bill } from '../../models/bill.model';
 import { BaseComponent } from '../../_utils/base.component';
 import { ButtonsGroupActions } from '../../_utils/constants';
 import { ConfirmationService, MessageService } from 'primeng/api';

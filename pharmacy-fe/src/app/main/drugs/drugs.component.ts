@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DrugEntityService } from '../../_services/facade-services/drug/drug.service';
 import { BaseComponent } from '../../_utils/base.component';
-import { Drug } from '../../_models/drug.model';
+import { Drug } from '../../models/drug.model';
 import { ButtonsGroupActions } from '../../_utils/constants';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DrugDataService } from '../../_services/data-services/drug/drug.data.service';

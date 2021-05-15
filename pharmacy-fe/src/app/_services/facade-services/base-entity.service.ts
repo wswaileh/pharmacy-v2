@@ -2,7 +2,7 @@ import { createEntityCacheSelector, EntityCollectionServiceBase, EntityCollectio
 import { createSelector, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, first, map, tap, delay } from 'rxjs/operators';
-import { IBaseModel, IBaseDTO } from '../../_models/base.model';
+import { IBaseModel, IBaseDTO } from '../../models/base.model';
 
 export class BaseEntityService<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> extends EntityCollectionServiceBase<Entity> {
 

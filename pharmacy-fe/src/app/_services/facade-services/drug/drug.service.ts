@@ -3,7 +3,7 @@ import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { createSelector, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Drug } from '../../../_models/drug.model';
+import { Drug } from '../../../models/drug.model';
 import { BaseEntityService } from '../base-entity.service';
 
 @Injectable()

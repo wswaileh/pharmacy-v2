@@ -1,6 +1,6 @@
 import { EntityDataModuleConfig, EntityMetadataMap } from '@ngrx/data';
-import { Bill } from '../_models/bill.model';
-import { ExpiryNotification } from '../_models/expiry-notification.model';
+import { Bill } from '../models/bill.model';
+import { ExpiryNotification } from '../models/expiry-notification.model';
 
 const entityMetadata: EntityMetadataMap = {
   Drug: {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { Bill } from '../../../_models/bill.model';
+import { Bill } from '../../../models/bill.model';
 import { BaseEntityService } from '../base-entity.service';
 
 

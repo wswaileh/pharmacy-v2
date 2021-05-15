@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Bill } from '../../_models/bill.model';
-import { Drug } from '../../_models/drug.model';
+import { Bill } from '../../models/bill.model';
+import { Drug } from '../../models/drug.model';
 import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
 import { BaseComponent } from '../../_utils/base.component';
 import { DrugEntityService } from '../../_services/facade-services/drug/drug.service';
