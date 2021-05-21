@@ -79,7 +79,6 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   }
 
   searchDrugByBarcode(event) {
-    console.log('here');
     this.drugsService.selectEntitiesByBarcode(event.query).subscribe((drug) => {
       this.drugBarcodeSearchResults = drug;
     });

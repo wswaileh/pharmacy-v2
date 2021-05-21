@@ -36,7 +36,6 @@ export class DrugsComponent extends BaseComponent<Drug> implements OnInit {
     super(drugService, 'Drug', Drug, confirmationService, messageService, drugDataService, route, titleService, noticationService);
     this.drugService = drugService;
     this.billService = billService;
-    console.log(isDevMode());
   }
 
   ngOnInit() {
@@ -58,7 +57,6 @@ export class DrugsComponent extends BaseComponent<Drug> implements OnInit {
         command: () => this.entityActions(ButtonsGroupActions.Remove),
       },
     ];
-    console.log(environment.production);
   }
 
   afterEntityDataFetch() {
