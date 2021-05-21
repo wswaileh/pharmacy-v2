@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
 import { NotificationEntityService } from '../../_services/facade-services/notification/notification.service';
+import { isDevMode } from '@angular/core';
 
 @Component({
   selector: 'app-drugs',
@@ -34,6 +35,7 @@ export class DrugsComponent extends BaseComponent<Drug> implements OnInit {
     super(drugService, 'Drug', Drug, confirmationService, messageService, drugDataService, route, titleService, noticationService);
     this.drugService = drugService;
     this.billService = billService;
+    console.log(isDevMode());
   }
 
   ngOnInit() {
