@@ -36,6 +36,7 @@ import { EntityButtonsComponent } from './entity-buttons/entity-buttons.componen
 import { EntityContextMenuComponent } from './entity-context-menu/entity-context-menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WSidebarComponent } from './w-sidebar/w-sidebar.component';
+import { LoaderComponent } from './loader/loader.component';
 import { UniqueValidatorDirective } from '../_directives/unique-validator.directive';
 import { CanDeactivateGuard } from '../_services/can-deactivate-guard/can-deactivate-guard.service';
 
@@ -76,7 +77,8 @@ const components = [
   NavbarComponent,
   WSidebarComponent,
   EntityButtonsComponent,
-  EntityContextMenuComponent
+  EntityContextMenuComponent,
+  LoaderComponent
 ];
 
 const directives = [

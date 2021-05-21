@@ -1,7 +1,5 @@
 <!-- Loading Spinner -->
-<!-- <div class="spinner-wrapper" *ngIf="isLoading">
-  <p-progressSpinner></p-progressSpinner>
-</div> -->
+<app-loader [isLoading]="isLoading"></app-loader>
 
 <p-toast [baseZIndex]="1000"></p-toast>
 <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>

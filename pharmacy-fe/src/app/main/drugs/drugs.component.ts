@@ -9,8 +9,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BillEntityService } from '../../_services/facade-services/bill/bill.service';
 import { NotificationEntityService } from '../../_services/facade-services/notification/notification.service';
-import { isDevMode } from '@angular/core';
-import { environment } from '@/environments/environment';
 
 @Component({
   selector: 'app-drugs',
