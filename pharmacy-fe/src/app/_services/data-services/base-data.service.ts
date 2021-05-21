@@ -18,6 +18,7 @@ export class BaseDataService<Entity extends IBaseModel<IBaseDTO, IBaseDTO>> exte
     super(entityName, http, httpUrlGenerator);
     endPoint = endPoint ? endPoint : entityName.toLowerCase() + 's';
     this.entitiesUrl = this.entityUrl = `${defaultDataServiceConfig.root}${endPoint}/`;
+    console.log(this.entitiesUrl);
   }
 
   getAll(): Observable<Entity[]> {
