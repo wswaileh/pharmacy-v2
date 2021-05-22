@@ -40,7 +40,7 @@ export class DrugEntityService extends BaseEntityService<Drug>{
 
   public selectEntitiesByBarcode(barcode: number): Observable<Drug[]> {
     return this.entities$.pipe(
-      map(arr => arr.filter(e => e.barcode.toString().toLocaleLowerCase().includes(barcode.toString().toLocaleLowerCase()))),
+      map(arr => arr.filter(e => e.barcode.toString().toLocaleLowerCase().startsWith(barcode.toString().toLocaleLowerCase()))),
     );
   }
 

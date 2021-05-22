@@ -74,13 +74,15 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   addSelectedDrugFromNameSearchToBill(event) {
     this.drugsService.selectEntityByName(event).subscribe((drug) => {
       this.addDrugToBill(drug);
+      this.drugName = undefined;
       this.drugNameSearchResults = [];
     });
-    this.drugName = undefined;
   }
 
   searchDrugByBarcode(event) {
-    this.drugsService.selectEntitiesByBarcode(event.query).subscribe((drug) => {
+    console.log(event);
+    this.drugsService.selectEntitiesByBarcode(event).subscribe((drug) => {
+      console.log(drug);
       this.drugBarcodeSearchResults = drug;
     });
   }
@@ -97,14 +99,17 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
           detail: 'NO Drug with such barcode!',
         });
       }
+      this.drugBarcode = undefined;
+      this.drugBarcodeSearchResults = drug ? null : [];
     });
-    this.drugBarcode = undefined;
-    this.drugBarcodeSearchResults = [];
   }
 
   barcodeFieldKeyUp(event) {
     if (event.keyCode === 13 && this.drugBarcode !== null && this.drugBarcode.toString().trim() !== '') {
       this.addSelectedDrugFromBarcodeSearchToBill({ barcode: this.drugBarcode });
+    } else {
+      console.log(this.drugBarcode);
+      this.searchDrugByBarcode(this.drugBarcode);
     }
   }
 
