@@ -74,6 +74,7 @@ export class NewBillComponent extends BaseComponent<Bill> implements OnInit {
   addSelectedDrugFromNameSearchToBill(event) {
     this.drugsService.selectEntityByName(event).subscribe((drug) => {
       this.addDrugToBill(drug);
+      this.drugNameSearchResults = [];
     });
     this.drugName = undefined;
   }
