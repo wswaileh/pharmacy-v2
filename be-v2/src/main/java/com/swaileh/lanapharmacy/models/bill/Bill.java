@@ -7,15 +7,21 @@ import com.swaileh.lanapharmacy.models.pharmacist.Pharmacist;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
 
 @Document(collection = "bills")
 public class Bill extends BaseEntityModel {
 
+    @NotEmpty
     private List<BillItem> items;
 
+    @NotNull
     private Pharmacist pharmacist;
 
+    @NotNull
     private Integer time;
 
     @Transient

@@ -1,21 +1,22 @@
 package com.swaileh.lanapharmacy.controllers;
 
-import com.swaileh.lanapharmacy.models.drug.Drug;
-import com.swaileh.lanapharmacy.models.exceptions.BadRequestException;
-import com.swaileh.lanapharmacy.models.exceptions.ResourceNotFoundException;
+import com.swaileh.lanapharmacy.configuration.PathConstants;
 import com.swaileh.lanapharmacy.models.notification.ExpiryNotification;
 import com.swaileh.lanapharmacy.services.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.swaileh.lanapharmacy.web.rest.errors.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/notifications")
 @RestController
-public class NotificationController {
+@RequestMapping(PathConstants.Notification.RESOURCE_BASE_V0)
+public class NotificationController extends BaseController {
 
-    @Autowired
     private NotificationService notificationService;
+
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @GetMapping
     public List<ExpiryNotification> getNotifications() {
@@ -23,16 +24,17 @@ public class NotificationController {
     }
 
     @PostMapping
-    public ExpiryNotification saveNotification(@RequestBody ExpiryNotification expiryNotification) throws BadRequestException { return notificationService.save(expiryNotification); }
+    public ExpiryNotification saveNotification(@RequestBody ExpiryNotification expiryNotification) {
+        return notificationService.save(expiryNotification);
+    }
 
-    @PutMapping("/{id}")
-    public ExpiryNotification editNotification(@PathVariable(value = "id") String id, @RequestBody ExpiryNotification newExpiryNotification)
-        throws ResourceNotFoundException, BadRequestException {
+    @PutMapping
+    public ExpiryNotification editNotification(@RequestBody ExpiryNotification newExpiryNotification) {
 
         return notificationService.update(newExpiryNotification);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(PathConstants.BY_ID)
     public void deleteNotification(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
         notificationService.delete(id);
     }

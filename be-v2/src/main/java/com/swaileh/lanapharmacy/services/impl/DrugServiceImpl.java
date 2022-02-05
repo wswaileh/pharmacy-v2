@@ -1,11 +1,15 @@
 package com.swaileh.lanapharmacy.services.impl;
 
+import com.swaileh.lanapharmacy.models.Entities;
 import com.swaileh.lanapharmacy.models.drug.Drug;
-import com.swaileh.lanapharmacy.models.exceptions.BadRequestException;
-import com.swaileh.lanapharmacy.models.exceptions.ResourceNotFoundException;
 import com.swaileh.lanapharmacy.services.DrugService;
+import com.swaileh.lanapharmacy.web.rest.errors.BadRequestAlertException;
+import com.swaileh.lanapharmacy.web.rest.errors.ErrorConstants;
+import com.swaileh.lanapharmacy.web.rest.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,14 +23,13 @@ public class DrugServiceImpl extends BaseEntityServiceImpl<Drug> implements Drug
         this.serviceFactory = serviceFactory;
     }
 
-
     @Override
-    public Drug update(Drug entity) throws ResourceNotFoundException, BadRequestException {
-        if (entity.getId().isBlank()){
-            throw new ResourceNotFoundException("No Such Drug!");
+    public Drug update(Drug entity) {
+        if (Objects.isNull(entity.getId()) || entity.getId().isBlank()) {
+            throw new BadRequestAlertException("Request has no ID!", Entities.PHARMACIST.getEntityName(), ErrorConstants.ERR_VALIDATION);
         }
 
-        Drug drug = getRepository().findById(entity.getId()).orElseThrow(() -> new ResourceNotFoundException("Drug with id " + entity.getId() + " doesn't exist!"));
+        Drug drug = this.findOne(entity.getId());
 
         drug.setName(entity.getName());
         drug.setBarcode(entity.getBarcode());
@@ -35,17 +38,23 @@ public class DrugServiceImpl extends BaseEntityServiceImpl<Drug> implements Drug
         drug.setSellingPrice(entity.getSellingPrice());
         drug.setQuantity(entity.getQuantity());
 
-        return save(drug);
+        return this.save(drug);
     }
 
     @Override
-    public Drug findByBarcode(Long barcode) throws ResourceNotFoundException {
-        return getRepository().findAll().stream().filter(drug -> drug.getBarcode().equals(barcode)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Drug with barcode " + barcode + " doesn't exist!"));
+    public Drug findByBarcode(Long barcode) {
+        return this.findAll().stream()
+            .filter(drug -> drug.getBarcode().equals(barcode))
+            .findFirst()
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Drug with barcode " + barcode + " doesn't exist!",
+                Entities.DRUG.getEntityName(),
+                ErrorConstants.ENTITY_NOT_FOUND_TYPE.toString()
+            ));
     }
 
-    public void deleteByBarcode(Long barcode) throws ResourceNotFoundException {
-        Drug drug = findByBarcode(barcode);
-        super.delete(drug.getId());
+    public void deleteByBarcode(Long barcode) {
+        this.deleteByBarcode(Collections.singleton(barcode));
     }
 
     public void deleteByBarcode(Set<Long> barcodes) {
