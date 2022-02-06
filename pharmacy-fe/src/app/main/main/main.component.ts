@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { navbarItems, sidebarItems } from './side-bar-menu-items';
-
+import { version } from '../../../../package.json';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -15,9 +15,12 @@ export class MainComponent {
 
   isSideBarOpen = false;
 
+  appVersion: string;
+
   constructor(private store: Store) {
     this.sidebarItems = sidebarItems;
     this.navbarItems = navbarItems;
+    this.appVersion = version;
   }
 
 }
