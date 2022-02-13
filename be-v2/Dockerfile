@@ -35,7 +35,7 @@ COPY pom.xml .
 RUN ./mvnw dependency:go-offline -B
 
 # # Copy the project source
-COPY src /app
+COPY src .
 
 # # Package the application
 RUN ./mvnw package -DskipTests
