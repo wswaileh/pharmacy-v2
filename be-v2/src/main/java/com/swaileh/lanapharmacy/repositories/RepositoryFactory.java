@@ -1,10 +1,10 @@
 package com.swaileh.lanapharmacy.repositories;
 
 import com.swaileh.lanapharmacy.models.BaseEntityModel;
+import com.swaileh.lanapharmacy.models.bill.Bill;
 import com.swaileh.lanapharmacy.models.drug.Drug;
 import com.swaileh.lanapharmacy.models.notification.ExpiryNotification;
 import com.swaileh.lanapharmacy.models.pharmacist.Pharmacist;
-import com.swaileh.lanapharmacy.models.bill.Bill;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class RepositoryFactory {
         EntityRepository<Bill, String> billRepository,
         EntityRepository<Pharmacist, String> pharmacistRepository,
         EntityRepository<ExpiryNotification, String> expiryNotificationRepository
-    ){
+    ) {
         reposMap.put(Drug.class, drugRepository);
         reposMap.put(Bill.class, billRepository);
         reposMap.put(Pharmacist.class, pharmacistRepository);

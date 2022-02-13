@@ -15,7 +15,7 @@ import { BillDataService } from '../_services/data-services/bill/bill.data.servi
 import { NotificationDataService } from '../_services/data-services/notification/notification.data.service';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: environment.backendUrl + '/api/',
+  root: environment.backendUrl + '/api/v0/',
   timeout: 3000, // request timeout
 };
 
