@@ -32,7 +32,7 @@ public class DrugController extends BaseController {
         return drugService.save(drug);
     }
 
-    @PutMapping
+    @PutMapping(PathConstants.BY_ID)
     public Drug editDrug(@RequestBody Drug newDrug) {
         return drugService.update(newDrug);
     }

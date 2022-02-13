@@ -22,7 +22,7 @@ public class PharmacistController extends BaseController {
         return pharmacistService.findAll();
     }
 
-    @PutMapping
+    @PutMapping(PathConstants.BY_ID)
     public Pharmacist editPharmacist(@RequestBody Pharmacist newPharmacist) {
         return pharmacistService.update(newPharmacist);
     }

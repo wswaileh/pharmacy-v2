@@ -28,7 +28,7 @@ public class NotificationController extends BaseController {
         return notificationService.save(expiryNotification);
     }
 
-    @PutMapping
+    @PutMapping(PathConstants.BY_ID)
     public ExpiryNotification editNotification(@RequestBody ExpiryNotification newExpiryNotification) {
 
         return notificationService.update(newExpiryNotification);
