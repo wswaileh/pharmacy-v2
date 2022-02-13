@@ -1,6 +1,6 @@
 # Lana Pharmacy App
 
-Lana Pharmacy App is a Springboot, Angular and MongoDB based POS app for the pharmacy.
+Lana Pharmacy App is a SpringBoot, Angular and MongoDB based POS app for the pharmacy.
 
 ## First Time Installation
 
