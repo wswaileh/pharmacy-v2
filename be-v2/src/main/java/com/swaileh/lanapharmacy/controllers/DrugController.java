@@ -1,45 +1,44 @@
 package com.swaileh.lanapharmacy.controllers;
 
+import com.swaileh.lanapharmacy.configuration.PathConstants;
 import com.swaileh.lanapharmacy.models.drug.Drug;
-import com.swaileh.lanapharmacy.models.exceptions.BadRequestException;
-import com.swaileh.lanapharmacy.models.exceptions.ResourceNotFoundException;
 import com.swaileh.lanapharmacy.services.DrugService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
-@RequestMapping("/api/drugs")
 @RestController
-public class DrugController {
+@RequestMapping(PathConstants.Drug.RESOURCE_BASE_V0)
+public class DrugController extends BaseController {
 
-    @Autowired
     private DrugService drugService;
+
+    public DrugController(DrugService drugService) {
+        this.drugService = drugService;
+    }
 
     @GetMapping
     public List<Drug> getDrugs() {
         return drugService.findAll();
     }
 
-    @GetMapping("/{barcode}")
-    public Drug getDrug(@PathVariable(value = "barcode") Long barcode) throws ResourceNotFoundException {
+    @GetMapping(PathConstants.Drug.BY_BARCODE)
+    public Drug getDrug(@PathVariable(value = "barcode") Long barcode) {
         return drugService.findByBarcode(barcode);
     }
 
     @PostMapping
-    public Drug saveDrug(@RequestBody Drug drug) throws ResourceNotFoundException, BadRequestException {
+    public Drug saveDrug(@RequestBody Drug drug) {
         return drugService.save(drug);
     }
 
-    @PutMapping("/{barcode}")
-    public Drug editDrug(@PathVariable(value = "barcode") Long barcode, @RequestBody Drug newDrug)
-        throws ResourceNotFoundException, BadRequestException {
-
+    @PutMapping(PathConstants.BY_ID)
+    public Drug editDrug(@RequestBody Drug newDrug) {
         return drugService.update(newDrug);
     }
 
-    @DeleteMapping("/{barcode}")
-    public void deleteDrug(@PathVariable(value = "barcode") Long barcode) throws ResourceNotFoundException {
+    @DeleteMapping(PathConstants.Drug.BY_BARCODE)
+    public void deleteDrug(@PathVariable(value = "barcode") Long barcode) {
         drugService.deleteByBarcode(barcode);
     }
 }

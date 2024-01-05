@@ -8,7 +8,12 @@ services:
     networks:
       - lana-pharmacy
     volumes:
-      - mongo-data:/data/db
+      - type: bind
+        source: $HOST/home/waleed/hdd/mongo-db/data
+        target: /data/db
+      - type: bind
+        source: $HOST/home/waleed/hdd/mongo-db/configdb
+        target: /data/configdb
   spring:
     build: ./be-v2
     container_name: pharmacy-be
@@ -22,7 +27,7 @@ services:
     build: ./pharmacy-fe
     container_name: pharmacy-fe
     ports:
-        - '80:80'
+        - '90:80'
     depends_on:
         - spring
     networks:

@@ -42,7 +42,7 @@ public class BillItem {
     }
 
     @Transient
-    public Double getTotalPrice(){
+    public Double getTotalPrice() {
         return this.price * this.quantity;
     }
 

@@ -5,7 +5,6 @@ import com.swaileh.lanapharmacy.models.drug.Drug;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class ExpiryNotification extends BaseEntityModel implements Comparable<ExpiryNotification> {

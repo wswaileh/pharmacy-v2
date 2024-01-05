@@ -1,2 +1,7 @@
+be-v2/target
+be-v2/logs
+be-v2/.mvn
 be-v2/src/main/resources/application.properties
 pharmacy-fe/node_modules
+pharmacy-fe/dist
+pharmacy-fe/package-lock.json
