@@ -51,7 +51,7 @@ public class ServiceFactory {
 
     @SuppressWarnings("unchecked")
     public <T extends BaseEntityModel> BaseEntityService<T> getService(Class<T> entityClass) {
-        if (SERVICE_MAP.size() == 0) {
+        if (SERVICE_MAP.isEmpty()) {
             ENTITIES.forEach(entity -> registerService(entity));
         }
         return (BaseEntityService<T>) ServiceFactory.SERVICE_MAP.get(entityClass);

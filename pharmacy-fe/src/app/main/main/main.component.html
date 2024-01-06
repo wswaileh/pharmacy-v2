@@ -1,4 +1,9 @@
-<app-navbar [appVersion]="appVersion" [items]="navbarItems" [displayName]="'Lana Swaileh'"></app-navbar>
+<app-navbar
+  [appVersion]="appVersion"
+  [items]="navbarItems"
+  [displayName]="'Lana Swaileh'"
+  (homeLinkClicked)="homeLinkClicked()"
+></app-navbar>
 <div #mainContainer class="main-container w-100 mt-5">
   <w-sidebar [items]="sidebarItems" [isOpen]="true">
     <router-outlet></router-outlet>

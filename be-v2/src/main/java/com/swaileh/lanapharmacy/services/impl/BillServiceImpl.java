@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BillServiceImpl extends BaseEntityServiceImpl<Bill> implements BillService {
 
-    private final ServiceFactory serviceFactory;
-
-    public BillServiceImpl(ServiceFactory serviceFactory) {
+    public BillServiceImpl() {
         super(Bill.class);
-        this.serviceFactory = serviceFactory;
     }
 }

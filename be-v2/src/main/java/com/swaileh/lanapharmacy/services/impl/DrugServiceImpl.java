@@ -16,11 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class DrugServiceImpl extends BaseEntityServiceImpl<Drug> implements DrugService {
 
-    private final ServiceFactory serviceFactory;
-
-    public DrugServiceImpl(ServiceFactory serviceFactory) {
+    public DrugServiceImpl() {
         super(Drug.class);
-        this.serviceFactory = serviceFactory;
     }
 
     @Override

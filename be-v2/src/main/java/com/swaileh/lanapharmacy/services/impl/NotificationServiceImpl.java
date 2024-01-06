@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class NotificationServiceImpl extends BaseEntityServiceImpl<ExpiryNotification> implements NotificationService {
 
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
 
     public NotificationServiceImpl(NotificationRepository notificationRepository) {
         super(ExpiryNotification.class);
@@ -43,35 +43,28 @@ public class NotificationServiceImpl extends BaseEntityServiceImpl<ExpiryNotific
 
     @Override
     public ExpiryNotification save(ExpiryNotification expiryNotification) {
-        Date currentDate = new Date();
-
-        LocalDate currentLocalDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        LocalDate reminderLocalDate = expiryNotification.getReminderDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        if (reminderLocalDate.getMonthValue() >= currentLocalDate.getMonthValue() && reminderLocalDate.getYear() >= currentLocalDate.getYear()) {
-            return notificationRepository.save(expiryNotification);
-        } else {
+        if (isNotValidNotification(expiryNotification)) {
             throw new BadRequestAlertException("Notification Date Can't be before today!",
                 Entities.NOTIFICATION.getEntityName(), ErrorConstants.ERR_VALIDATION);
         }
+        return notificationRepository.save(expiryNotification);
     }
 
     @Override
     public ExpiryNotification update(ExpiryNotification expiryNotification) {
-        Date currentDate = new Date();
-
-        LocalDate currentLocalDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        LocalDate reminderLocalDate = expiryNotification.getReminderDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        if (reminderLocalDate.getMonthValue() >= currentLocalDate.getMonthValue() && reminderLocalDate.getYear() >= currentLocalDate.getYear()) {
-            expiryNotification.setReminderDate(expiryNotification.getReminderDate());
-
-            return notificationRepository.save(expiryNotification);
-        } else {
+        if (isNotValidNotification(expiryNotification)) {
             throw new BadRequestAlertException("Notification Date Can't be before today!",
                 Entities.NOTIFICATION.getEntityName(), ErrorConstants.ERR_VALIDATION);
         }
+        expiryNotification.setReminderDate(expiryNotification.getReminderDate());
+        return notificationRepository.save(expiryNotification);
+    }
+
+    private boolean isNotValidNotification(ExpiryNotification expiryNotification) {
+        LocalDate currentLocalDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate reminderLocalDate = expiryNotification.getReminderDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        return reminderLocalDate.getMonthValue() < currentLocalDate.getMonthValue() && reminderLocalDate.getYear() < currentLocalDate.getYear();
     }
 }
