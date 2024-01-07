@@ -9,7 +9,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "resolveJsonModule": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -22,7 +21,9 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
