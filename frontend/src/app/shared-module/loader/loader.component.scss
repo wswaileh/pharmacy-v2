@@ -1,0 +1,9 @@
+::ng-deep .p-progress-spinner {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    transform: -webkit-translate(-50%, -50%) !important;
+    transform: -moz-translate(-50%, -50%) !important;
+    transform: -ms-translate(-50%, -50%) !important;
+}

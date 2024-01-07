@@ -24,7 +24,7 @@ services:
     networks:
       - lana-pharmacy
   angular:
-    build: ./pharmacy-fe
+    build: ./frontend
     container_name: pharmacy-fe
     ports:
         - '90:80'
