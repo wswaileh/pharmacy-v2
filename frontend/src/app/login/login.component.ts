@@ -17,7 +17,7 @@ export class LoginComponent {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/']);
     }
-    if (this.router.getCurrentNavigation().extras.state['msg']) {
+    if (this.router.getCurrentNavigation()?.extras?.state?.['msg']) {
       this.errorMsg = this.router.getCurrentNavigation().extras.state['msg'];
     }
   }
