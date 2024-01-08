@@ -4,7 +4,6 @@ import com.swaileh.lanapharmacy.configuration.PathConstants;
 import com.swaileh.lanapharmacy.models.drug.Drug;
 import com.swaileh.lanapharmacy.services.DrugService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

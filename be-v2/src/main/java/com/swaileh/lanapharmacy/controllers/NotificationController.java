@@ -5,7 +5,6 @@ import com.swaileh.lanapharmacy.models.notification.ExpiryNotification;
 import com.swaileh.lanapharmacy.services.NotificationService;
 import com.swaileh.lanapharmacy.web.rest.errors.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
