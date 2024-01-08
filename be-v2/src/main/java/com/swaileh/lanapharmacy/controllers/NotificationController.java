@@ -22,6 +22,7 @@ public class NotificationController extends BaseController {
         return notificationService.findAll();
     }
 
+    @PostMapping
     public ExpiryNotification saveNotification(@RequestBody ExpiryNotification expiryNotification) {
         return notificationService.save(expiryNotification);
     }

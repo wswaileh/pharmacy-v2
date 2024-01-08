@@ -26,6 +26,7 @@ public class DrugController extends BaseController {
         return drugService.findByBarcode(barcode);
     }
 
+    @PostMapping
     public Drug saveDrug(@RequestBody Drug drug) {
         return drugService.save(drug);
     }
