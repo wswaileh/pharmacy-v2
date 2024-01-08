@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface SideBarItem {
   itemName: string;
@@ -7,6 +7,7 @@ export interface SideBarItem {
   isDisabled?: boolean;
   isWithNotificationCount?: boolean;
   notificationsCount?: string;
+  allowedRoles: string[];
 }
 
 export interface SideBarItemsGroup {
@@ -17,17 +18,25 @@ export interface SideBarItemsGroup {
   // tslint:disable-next-line: component-selector
   selector: 'w-sidebar',
   templateUrl: './w-sidebar.component.html',
-  styleUrls: ['./w-sidebar.component.scss']
+  styleUrls: ['./w-sidebar.component.scss'],
 })
-export class WSidebarComponent implements OnInit {
-
-  @Input() items: SideBarItemsGroup[];
+export class WSidebarComponent {
+  @Input() set items(groups: SideBarItemsGroup[]) {
+    this.itemsFiltered = groups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) =>
+          item.allowedRoles.includes(this.currentUserRole)
+        ),
+      }))
+      .filter((group) => group.items.length);
+  }
 
   @Input() isOpen: boolean;
 
-  constructor() { }
+  @Input() currentUserRole: string;
 
-  ngOnInit(): void {
-  }
+  itemsFiltered: SideBarItemsGroup[] = [];
 
+  constructor() {}
 }

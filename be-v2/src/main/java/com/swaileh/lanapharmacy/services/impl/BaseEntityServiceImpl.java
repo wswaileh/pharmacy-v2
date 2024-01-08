@@ -6,6 +6,7 @@ import com.swaileh.lanapharmacy.repositories.EntityRepository;
 import com.swaileh.lanapharmacy.services.BaseEntityService;
 import com.swaileh.lanapharmacy.web.rest.errors.ErrorConstants;
 import com.swaileh.lanapharmacy.web.rest.errors.ResourceNotFoundException;
+import lombok.Getter;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+@Getter
 public class BaseEntityServiceImpl<T extends BaseEntityModel> extends BaseService implements BaseEntityService<T> {
 
     private Class<T> entityType;
@@ -28,8 +30,8 @@ public class BaseEntityServiceImpl<T extends BaseEntityModel> extends BaseServic
 
     public BaseEntityServiceImpl(Class<T> entityType) {
         this.entityType = entityType;
-        ServiceFactory.registerExtendedServiceType(entityType, this);
         this.entityName = Entities.getEntityByClass(entityType).getEntityName();
+        ServiceFactory.registerExtendedServiceType(entityType, this);
     }
 
     protected EntityRepository<T, String> getRepository() {

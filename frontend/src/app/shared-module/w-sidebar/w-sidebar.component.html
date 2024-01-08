@@ -4,7 +4,7 @@
 <div class="d-flex {{isOpen ? '' : 'toggled'}}" id="wrapper">
   <!-- Sidebar -->
   <div class="border-right" id="sidebar-wrapper">
-    <div *ngFor="let item of items">
+    <div *ngFor="let item of itemsFiltered">
       <div *ngIf="item.itemName" class="sidebar-heading text-uppercase">{{item.itemName}}</div>
       <div *ngIf="!item.itemName" class="mt-2"></div>
       <div class="list-group list-group-flush" *ngFor="let subItem of item.items">

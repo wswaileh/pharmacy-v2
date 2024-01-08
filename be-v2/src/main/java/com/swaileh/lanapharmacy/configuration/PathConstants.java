@@ -29,5 +29,14 @@ public interface PathConstants {
         String RESOURCE_BASE_V0 = BASE + VERSION_0 + RESOURCE;
     }
 
+    interface Auth {
+        String RESOURCE = "/auth";
+        String RESOURCE_BASE_V0 = BASE + VERSION_0 + RESOURCE;
+
+        String LOGIN = "/login";
+
+        String USER_DETAILS = "/user-details";
+    }
+
 
 }

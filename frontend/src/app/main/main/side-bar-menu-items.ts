@@ -1,3 +1,4 @@
+import { UserRole } from '../../_utils/constants';
 import { SideBarItemsGroup } from '../../shared-module/w-sidebar/w-sidebar.component';
 
 export const sidebarItems: SideBarItemsGroup[] = [
@@ -8,7 +9,8 @@ export const sidebarItems: SideBarItemsGroup[] = [
         itemName: 'Expiries',
         routerLink: '/main/notifications',
         icon: 'fas fa-bell',
-        isWithNotificationCount: true
+        isWithNotificationCount: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.PHARMACIST]
       }
     ]
   },
@@ -18,7 +20,8 @@ export const sidebarItems: SideBarItemsGroup[] = [
       {
         itemName: 'Drugs',
         routerLink: '/main/drugs',
-        icon: 'fas fa-tablets'
+        icon: 'fas fa-tablets',
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.PHARMACIST]
       }
     ]
   },
@@ -27,12 +30,14 @@ export const sidebarItems: SideBarItemsGroup[] = [
     items: [      {
         itemName: 'New Bill',
         routerLink: '/main/new-bill',
-        icon: 'fas fa-plus-square'
+        icon: 'fas fa-plus-square',
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.PHARMACIST]
       },
       {
         itemName: 'All Bills',
         routerLink: '/main/bills',
-        icon: 'fas fa-file-invoice-dollar'
+        icon: 'fas fa-file-invoice-dollar',
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.PHARMACIST]
       },
     ]
   },
@@ -43,7 +48,8 @@ export const sidebarItems: SideBarItemsGroup[] = [
         itemName: 'Reports',
         routerLink: '/sfaf',
         icon: 'fas fa-clipboard-list',
-        isDisabled: true
+        isDisabled: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER]
       },
     ]
   },
@@ -54,7 +60,8 @@ export const sidebarItems: SideBarItemsGroup[] = [
         itemName: 'Edit Users',
         routerLink: '/main/users',
         icon: 'fas fa-users',
-        isDisabled: true
+        isDisabled: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.MANAGER]
       },
     ]
   },

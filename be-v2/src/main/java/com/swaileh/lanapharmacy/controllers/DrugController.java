@@ -3,19 +3,17 @@ package com.swaileh.lanapharmacy.controllers;
 import com.swaileh.lanapharmacy.configuration.PathConstants;
 import com.swaileh.lanapharmacy.models.drug.Drug;
 import com.swaileh.lanapharmacy.services.DrugService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(PathConstants.Drug.RESOURCE_BASE_V0)
+@AllArgsConstructor
 public class DrugController extends BaseController {
 
     private DrugService drugService;
-
-    public DrugController(DrugService drugService) {
-        this.drugService = drugService;
-    }
 
     @GetMapping
     public List<Drug> getDrugs() {
